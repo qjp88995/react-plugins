@@ -1,0 +1,47 @@
+.app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  $leftWidth: 200px;
+  nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    width: $leftWidth;
+    height: 100vh;
+    background: black;
+    padding: 20px;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      li {
+        margin-bottom: 10px;
+        a {
+          color: white;
+        }
+        a:active, a:hover {
+          color: rgb(255, 115, 0);
+        }
+        
+        &.active a {
+          color: rgb(255, 115, 0);
+        }
+      }
+    }
+  }
+  main {
+    margin-left: $leftWidth;
+    box-sizing: border-box;
+    width: calc(100% - #{$leftWidth});
+    padding: 20px;
+  }
+}
+
+table {
+  &,tr,th,td {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+  }
+}
