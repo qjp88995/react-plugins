@@ -7,6 +7,7 @@ import ArtTemplate from './components/ArtTemplate';
 import Docx from './components/Docx';
 import Jszip from './components/Jszip';
 import DocxPreviewer from './components/DocxPreviewer';
+import Book from './components/Book';
 
 const Li = ({ to, label, activeOnlyWhenExact }) => {
   const match = useRouteMatch({
@@ -22,45 +23,33 @@ const Li = ({ to, label, activeOnlyWhenExact }) => {
 }
 
 function App() {
-  const menus = [
-    { to: '/carousel', label: 'Carousel' },
-    { to: '/xlsx2json', label: 'Xlsx2json' },
-    { to: '/art-template', label: 'ArtTemplate' },
-    { to: '/docx', label: 'Docx' },
-    { to: '/jszip', label: 'Jszip' },
-    { to: '/docx-previewer', label: 'DocxPreviewer' },
+  const routes = [
+    { path: '/carousel', title: 'Carousel', component: Carousel },
+    { path: '/xlsx2json', title: 'Xlsx2json', component: Xlsx2json },
+    { path: '/art-template', title: 'ArtTemplate', component: ArtTemplate },
+    { path: '/docx', title: 'Docx', component: Docx },
+    { path: '/jszip', title: 'Jszip', component: Jszip },
+    { path: '/docx-previewer', title: 'DocxPreviewer', component: DocxPreviewer },
+    { path: '/book', title: 'Book', component: Book },
   ];
   return (
     <Router>
       <div className={styles.app}>
         <nav>
           <ul>
-            {menus.map(item => (
-              <Li key={item.to} { ...item } />
+            {routes.map(item => (
+              <Li key={item.path} to={item.path} label={item.title} />
             ))}
           </ul>
         </nav>
         <main>
           <Switch>
-            <Route path="/carousel">
-              <Carousel />
-            </Route>
-            <Route path="/xlsx2json">
-              <Xlsx2json url="/test.xlsx" />
-            </Route>
-            <Route path="/art-template">
-              <ArtTemplate />
-            </Route>
-            <Route path="/docx">
-              <Docx />
-            </Route>
-            <Route path="/jszip">
-              <Jszip />
-            </Route>
-            <Route path="/docx-previewer">
-              <DocxPreviewer />
-            </Route>
-            <Route path="/" exact render={() => (<Redirect to="/carousel" />)} />
+            {routes.map(item => (
+              <Route key={item.path} path={item.path}>
+                <item.component />
+              </Route>
+            ))}
+            <Route path="/" exact render={() => (<Redirect to={routes[0].path} />)} />
           </Switch>
         </main>
       </div>
