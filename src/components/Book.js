@@ -24,7 +24,7 @@ const Book = props => {
         <div className={styles['book-spine']} />
       </div>
     </div>
-  )
+  );
 }
 
 export default Book;

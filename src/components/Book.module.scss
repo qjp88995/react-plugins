@@ -126,11 +126,11 @@ $animation_time: .8s;
     .book-spine {
       position: absolute;
       width: 100%;
-      height: abs(($page_size + 2) * $gap_z);
+      height: abs(($page_size - 2) * $gap_z);
       left: 0;
       bottom: 0;
-      transform: rotateX(90deg) translateZ($first_z);
-      transform-origin: center bottom $first_z;
+      transform: rotateX(90deg) translateZ($first_z + $gap_z * 2);
+      transform-origin: center bottom $first_z + $gap_z * 2;
 
       &::before {
         content: '';
