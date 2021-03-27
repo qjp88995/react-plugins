@@ -2,6 +2,7 @@
   "name": "react-test",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://qjp88995.github.io/react-plugins",
   "dependencies": {
     "@craco/craco": "^6.0.0",
     "@testing-library/jest-dom": "^4.2.4",
