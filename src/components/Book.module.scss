@@ -1,6 +1,6 @@
 $first_z: -20px;
 $gap_z: -5px;
-$page_size: 10;
+$page_size: 5;
 $center_page: ceil($page_size / 2);
 $last_z: $first_z + ($page_size + 1) * $gap_z;
 $page_space: 4px;
@@ -15,9 +15,9 @@ $animation_time: .8s;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 400px;
-  height: 400px * 1.267;
-  perspective: 1000px;
+  width: 200px;
+  height: 200px * 1.267;
+  perspective: 2000px;
   border: 1px solid #ccc;
 
   img {
@@ -46,7 +46,7 @@ $animation_time: .8s;
     position: relative;
     width: 80%;
     height: 80%;
-    perspective: 1000px;
+    perspective: 2000px;
     transform: rotateY(-30deg);
     transform-style: preserve-3d;
     transform-origin: left center;
@@ -60,7 +60,7 @@ $animation_time: .8s;
       position: absolute;
       width: 100%;
       height: 100%;
-      backface-visibility: hidden;
+      backface-visibility: visible;
       transform: rotateY(0deg) translateZ($first_z);
       transform-origin: left center $origin_z;
       transition: transform $animation_time ease-in-out;
@@ -73,6 +73,11 @@ $animation_time: .8s;
     }
 
     .book-page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       .book-page-item {
         position: absolute;
         top: $page_space;
@@ -86,6 +91,9 @@ $animation_time: .8s;
         display: flex;
         justify-content: center;
         align-items: center;
+        background: linear-gradient(to right, #e1ddd8 0%, #fffbf6 100%);
+        box-shadow: inset 0px -1px 2px rgba(50, 50, 50, 0.1), inset -1px 0px 1px rgba(150, 150, 150, 0.2);
+	      border-radius: 0px 5px 5px 0px;
         
         @for $i from 1 through $page_size {
           &:nth-child(#{$i}) {

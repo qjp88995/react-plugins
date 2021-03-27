@@ -10,7 +10,7 @@ const Book = props => {
           <div />
         </div>
         <div className={styles['book-page']}>
-          {new Array(10).fill(null).map((_, index, arr) => (
+          {new Array(5).fill(null).map((_, index, arr) => (
             <div key={index} className={styles['book-page-item']}>
               {index === (Math.ceil(arr.length / 2)) && (
                 <a className={styles["btn"]} href=".#">点击下载</a>
