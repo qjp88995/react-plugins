@@ -6,7 +6,7 @@ const Book = props => {
     <div className={styles.wrapper}>
       <div className={`${styles.book} ${styles['book-expand']}`}>
         <div className={styles['book-front']}>
-          <img src="/book-test.png" alt="" />
+          <img src={`${process.env.PUBLIC_URL}/book-test.png`} alt="" />
           <div />
         </div>
         <div className={styles['book-page']}>
@@ -19,7 +19,7 @@ const Book = props => {
           ))}
         </div>
         <div className={styles['book-back']}>
-          <img src="/book-test.png" alt="" />
+          <img src={`${process.env.PUBLIC_URL}/book-test.png`} alt="" />
         </div>
         <div className={styles['book-spine']} />
       </div>

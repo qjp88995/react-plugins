@@ -33,7 +33,7 @@ function App() {
     { path: '/book', title: 'Book', component: Book },
   ];
   return (
-    <Router path={process.env.ROUTER_PATH || '/'}>
+    <Router basename={process.env.PUBLIC_URL}>
       <div className={styles.app}>
         <nav>
           <ul>
@@ -49,7 +49,7 @@ function App() {
                 <item.component />
               </Route>
             ))}
-            <Route path="/" exact render={() => (<Redirect to={routes[0].path} />)} />
+            <Route path={process.env.PUBLIC_URL} exact render={() => (<Redirect to={routes[0].path} />)} />
           </Switch>
         </main>
       </div>

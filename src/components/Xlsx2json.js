@@ -5,7 +5,7 @@ import styles from './Xlsx2json.module.scss';
 const tableKeys = ['index_type', 'item_type', 'majors', 'code', 'content', 'evaluation_score', 'score_code'];
 
 const Xlsx2json = () => {
-    const [url, setUrl] = useState('/test.xlsx');
+    const [url, setUrl] = useState(`${process.env.PUBLIC_URL}/test.xlsx`);
     const [contentColSpan, setContentColSpan] = useState(1);
     const [data, setData] = useState([]);
     const [tableData, setTableData] = useState([]);
