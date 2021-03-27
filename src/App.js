@@ -49,7 +49,7 @@ function App() {
                 <item.component />
               </Route>
             ))}
-            <Route path={process.env.PUBLIC_URL} exact render={() => (<Redirect to={routes[0].path} />)} />
+            <Route path='/' exact render={() => (<Redirect to={routes[0].path} />)} />
           </Switch>
         </main>
       </div>
