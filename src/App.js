@@ -33,7 +33,7 @@ function App() {
     { path: '/book', title: 'Book', component: Book },
   ];
   return (
-    <Router>
+    <Router path={process.env.ROUTER_PATH || '/'}>
       <div className={styles.app}>
         <nav>
           <ul>
