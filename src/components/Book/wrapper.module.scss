@@ -1,4 +1,4 @@
-$base_y: -30deg;
+$base_y: -13deg;
 $hover_base_y: 12deg;
 
 $front_y: $base_y + -12deg;
@@ -237,36 +237,6 @@ $hover_back_y: $hover_base_y;
     &:hover {
       .book-back {
         transform: rotateY($hover_back_y);
-      }
-    }
-
-    .book-spine {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-
-      &::before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 1px;
-        height: 4px;
-        background: #999;
-        box-shadow: 5px -1px 100px 40px rgba(0, 0, 0, 0.2);
-        transform: rotateX(80deg);
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 1px;
-        height: 4px;
-        background: #999;
-        transform: rotateX(80deg);
       }
     }
   }

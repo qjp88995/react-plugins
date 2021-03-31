@@ -6,14 +6,10 @@ import styles2 from './wrapper2.module.scss';
 
 const Book = props => {
   return (
-    <div>
+    <div style={{ marginTop: 40, display: 'flex', justifyContent: 'space-around' }}>
       <Wrapper styles={styles} />
-      <div style={{ marginTop: 40 }}>
-        <Wrapper styles={styles1} />
-      </div>
-      <div style={{ marginTop: 40, marginLeft: 200 }}>
-        <Wrapper styles={styles2} />
-      </div>
+      <Wrapper styles={styles1} mode="rotate" />
+      <Wrapper styles={styles2} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Wrapper = props => {
-  const { styles } = props;
+  const { styles, mode = 'turn' } = props;
 
   return (
     <div className={styles.wrapper}>
@@ -9,6 +9,11 @@ const Wrapper = props => {
         <div className={styles['book-front']}>
           <div>
             <img src={`${process.env.PUBLIC_URL}/book-test.png`} alt="" />
+            {mode === 'rotate' && (
+              <div className={styles['book-download']}>
+                <a href=".#"> 下载 </a>
+              </div>
+            )}
           </div>
           <div />
         </div>
@@ -17,7 +22,9 @@ const Wrapper = props => {
           <div className={styles['book-page-item']} />
           <div className={styles['book-page-item']} />
           <div className={styles['book-page-item']}>
-            <a className={styles["btn"]} href=".#">点击下载</a>
+            {mode === 'turn' && (
+              <a className={styles["btn"]} href=".#">点击下载</a>
+            )}
           </div>
           <div className={styles['book-page-item']} />
         </div>
@@ -27,7 +34,6 @@ const Wrapper = props => {
           </div>
           <div />
         </div>
-        <div className={styles['book-spine']} />
       </div>
     </div>
   );
