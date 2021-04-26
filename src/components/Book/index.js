@@ -9,7 +9,7 @@ const Book = props => {
     <div style={{ marginTop: 40, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
       <Wrapper styles={styles} />
       <Wrapper styles={styles1} mode="rotate" />
-      <Wrapper styles={styles2} />
+      <Wrapper styles={styles2} mode="turn" />
     </div>
   );
 }

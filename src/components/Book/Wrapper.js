@@ -17,17 +17,15 @@ const Wrapper = props => {
           </div>
           <div />
         </div>
-        <div className={styles['book-page']}>
-          <div className={styles['book-page-item']} />
-          <div className={styles['book-page-item']} />
-          <div className={styles['book-page-item']} />
-          <div className={styles['book-page-item']}>
-            {mode === 'turn' && (
-              <a className={styles["btn"]} href=".#">点击下载</a>
-            )}
-          </div>
-          <div className={styles['book-page-item']} />
+        <div className={`${styles['book-page']} ${styles['book-page-1']}`} />
+        <div className={`${styles['book-page']} ${styles['book-page-2']}`} />
+        <div className={`${styles['book-page']} ${styles['book-page-3']}`} />
+        <div className={`${styles['book-page']} ${styles['book-page-4']}`}>
+          {mode === 'turn' && (
+            <a className={styles["btn"]} href=".#">点击下载</a>
+          )}
         </div>
+        <div className={`${styles['book-page']} ${styles['book-page-5']}`} />
         <div className={styles['book-back']}>
           <div>
             <img src={`${process.env.PUBLIC_URL}/book-test.png`} alt="" />

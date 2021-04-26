@@ -8,6 +8,7 @@ import Docx from './components/Docx';
 import Jszip from './components/Jszip';
 import DocxPreviewer from './components/DocxPreviewer';
 import Book from './components/Book';
+import Background from './components/Background';
 
 const Li = ({ to, label, activeOnlyWhenExact }) => {
   const match = useRouteMatch({
@@ -31,6 +32,7 @@ function App() {
     { path: '/jszip', title: 'Jszip', component: Jszip },
     { path: '/docx-previewer', title: 'DocxPreviewer', component: DocxPreviewer },
     { path: '/book', title: 'Book', component: Book },
+    { path: '/background', title: 'Background', component: Background },
   ];
   return (
     <Router basename={process.env.PUBLIC_URL}>

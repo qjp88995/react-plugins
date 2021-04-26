@@ -137,36 +137,34 @@
     }
 
     .book-page {
-      .book-page-item {
-        position: absolute;
-        top: 5px;
-        bottom: 5px;
-        left: 0;
-        right: 5px;
-        backface-visibility: visible;
-        background: linear-gradient(to right, #e1ddd8 0%, #fffbf6 100%);
-        box-shadow: inset 0px -1px 2px rgba(50, 50, 50, 0.1), inset -1px 0px 1px rgba(150, 150, 150, 0.2);
-        border-radius: 0px 5px 5px 0px;
+      position: absolute;
+      top: 5px;
+      bottom: 5px;
+      left: 0;
+      right: 5px;
+      backface-visibility: visible;
+      background: linear-gradient(to right, #e1ddd8 0%, #fffbf6 100%);
+      box-shadow: inset 0px -1px 2px rgba(50, 50, 50, 0.1), inset -1px 0px 1px rgba(150, 150, 150, 0.2);
+      border-radius: 0px 5px 5px 0px;
 
-        &:nth-child(1) {
-          transform: translateZ($page1_z);
-        }
+      &.book-page-1 {
+        transform: translateZ($page1_z);
+      }
 
-        &:nth-child(2) {
-          transform: translateZ($page2_z);
-        }
-        &:nth-child(3) {
-          transform: translateZ($page3_z);
-        }
-        &:nth-child(4) {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          transform: translateZ($page4_z);
-        }
-        &:nth-child(5) {
-          transform: translateZ($page5_z);
-        }
+      &.book-page-2 {
+        transform: translateZ($page2_z);
+      }
+      &.book-page-3 {
+        transform: translateZ($page3_z);
+      }
+      &.book-page-4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateZ($page4_z);
+      }
+      &.book-page-5 {
+        transform: translateZ($page5_z);
       }
     }
 
