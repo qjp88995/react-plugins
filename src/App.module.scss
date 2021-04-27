@@ -58,6 +58,7 @@
     margin-left: $leftWidth;
     box-sizing: border-box;
     width: calc(100% - #{$leftWidth});
+    height: 100vh;
     padding: 20px;
 
     @media screen {

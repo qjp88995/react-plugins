@@ -9,6 +9,7 @@ import Jszip from './components/Jszip';
 import DocxPreviewer from './components/DocxPreviewer';
 import Book from './components/Book';
 import Background from './components/Background';
+import Canvas from './components/Canvas';
 
 const Li = ({ to, label, activeOnlyWhenExact }) => {
   const match = useRouteMatch({
@@ -33,6 +34,7 @@ function App() {
     { path: '/docx-previewer', title: 'DocxPreviewer', component: DocxPreviewer },
     { path: '/book', title: 'Book', component: Book },
     { path: '/background', title: 'Background', component: Background },
+    { path: '/canvas', title: 'Canvas', component: Canvas },
   ];
   return (
     <Router basename={process.env.PUBLIC_URL}>
