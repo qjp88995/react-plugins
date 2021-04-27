@@ -63,6 +63,8 @@ export class Stage {
     this.idsManager = new IdsManager();
     this.eventsManager = new EventsManager(this.oCtx);
     canvas.addEventListener('click', this.onClick);
+    canvas.addEventListener('mousemove', this.onMouseMove);
+    canvas.addEventListener('mouseout', this.onMouseOut);
   }
 
   add = shape => {
@@ -106,14 +108,37 @@ export class Stage {
   }
 
   onClick = e => {
+    const id = this.getEventId(e);
     Array.from(this.eventsManager.list.keys()).forEach(item => {
-      if (item === `${this.getEventId(e)}.click`) this.eventsManager.list.get(item)(e);
+      if (item === `${id}.click`) this.eventsManager.list.get(item)(e);
+    });
+  }
+
+  onMouseMove = e => {
+    const id = this.getEventId(e);
+    Array.from(this.eventsManager.list.keys()).forEach(item => {
+      const inEventNames = ['mouseMove', 'mouseOver', 'mouseEnter'];
+      const outEventNames = ['mouseOut', 'mouseLeave'];
+      const eventName = item.split('.').pop('.');
+      if (item.startsWith(id)) {
+        if (inEventNames.includes(eventName)) this.eventsManager.list.get(item)(e);
+      } else {
+        if (outEventNames.includes(eventName)) this.eventsManager.list.get(item)(e);
+      }
+    });
+  }
+
+  onMouseOut = e => {
+    Array.from(this.eventsManager.list.keys()).forEach(item => {
+      const outEventNames = ['mouseOut', 'mouseLeave'];
+      const eventName = item.split('.').pop('.');
+      if (outEventNames.includes(eventName)) this.eventsManager.list.get(item)(e);
     });
   }
 }
 
 class Shape {
-  constructor() {
+  constructor(options) {
     this.id = null;
     this.draw = null;
     this.options = {
@@ -127,14 +152,20 @@ class Shape {
       shadowBlur: 0,
       shadowOffsetX: 0,
       shadowOffsetY: 0,
+      ...options,
     };
   }
 
   render = (ctx, oCtx) => {
     if (this.draw) {
+      ctx.save();
       this.draw(ctx);
+      if (this.options.lineWidth && this.options.strokeStyle) ctx.stroke();
+      if (this.options.fillStyle) ctx.fill();
+      ctx.restore();
       if (this.id) {
         const color = `rgba(${IdsManager.idToRgba(this.id).toString()})`;
+        oCtx.save();
         this.draw(oCtx, {
           fillStyle: color,
           strokeStyle: color,
@@ -142,6 +173,9 @@ class Shape {
           shadowOffsetX: 0,
           shadowOffsetY: 0,
         });
+        if (this.options.lineWidth && this.options.strokeStyle) oCtx.stroke();
+        if (this.options.fillStyle) oCtx.fill();
+        oCtx.restore();
       }
     }
   }
@@ -151,10 +185,9 @@ export class Rect extends Shape {
   constructor(options) {
     super(options);
     this.options = {
-      ...super.options,
       width: 100,
       height: 100,
-      ...options,
+      ...this.options,
     };
   }
 
@@ -169,10 +202,13 @@ export class Rect extends Shape {
     ctx.lineTo(options.x + options.width, options.y + options.height);
     ctx.lineTo(options.x, options.y + options.height);
     ctx.closePath();
+    ctx.lineWidth = options.lineWidth;
     ctx.strokeStyle = options.strokeStyle;
-    ctx.stroke();
     ctx.fillStyle = options.fillStyle;
-    ctx.fill();
+    ctx.shadowColor = options.shadowColor;
+    ctx.shadowBlur = options.shadowBlur;
+    ctx.shadowOffsetX = options.shadowOffsetX;
+    ctx.shadowOffsetY = options.shadowOffsetY;
   }
 }
 
@@ -180,11 +216,10 @@ export class Circle extends Shape {
   constructor(options) {
     super(options);
     this.options = {
-      ...super.options,
       radius: 10,
       sAngle: 0,
       eAngle: 2 * Math.PI,
-      ...options,
+      ...this.options,
     };
   }
   draw = (ctx, options = null) => {
@@ -194,9 +229,12 @@ export class Circle extends Shape {
     };
     ctx.beginPath();
     ctx.arc(options.x, options.y, options.radius, options.sAngle, options.eAngle);
+    ctx.lineWidth = options.lineWidth;
     ctx.strokeStyle = options.strokeStyle;
-    ctx.stroke();
     ctx.fillStyle = options.fillStyle;
-    ctx.fill();
+    ctx.shadowColor = options.shadowColor;
+    ctx.shadowBlur = options.shadowBlur;
+    ctx.shadowOffsetX = options.shadowOffsetX;
+    ctx.shadowOffsetY = options.shadowOffsetY;
   }
 }
