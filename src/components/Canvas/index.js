@@ -19,10 +19,24 @@ const Canvas = props => {
       stage.add(earth);
       let angle = 0;
       let perAngle = 1;
-      stage.addEventListener('mouseOver', earth, (e, shape) => {
+      let direction = 1;
+      stage.addEventListener('mouseDown', sun, (e, target) => {
+        target.setOptions({
+          shadowBlur: 10,
+        });
+      });
+      stage.addEventListener('mouseUp', sun, (e, target) => {
+        target.setOptions({
+          shadowBlur: 20,
+        });
+      });
+      stage.addEventListener('click', sun, (e, target) => {
+        direction = direction ? 0 : 1;
+      });
+      stage.addEventListener('mouseOver', earth, (e, target) => {
         perAngle = 0;
       });
-      stage.addEventListener('mouseOut', earth, (e, shape) => {
+      stage.addEventListener('mouseOut', earth, (e, target) => {
         perAngle = 1;
       });
       const draw = () => {
@@ -42,16 +56,21 @@ const Canvas = props => {
         track.options.y = height / 2;
         earth.options.x = width / 2 + 200 * Math.cos(angle * Math.PI / 180);
         earth.options.y = height / 2 + 200 * Math.sin(angle * Math.PI / 180);
-        angle += perAngle;
-        angle = angle > 360 ? 0 : angle;
+        angle = direction ? angle + perAngle : angle - perAngle;
+        if (angle < -360 || angle > 360) angle = 0;
         stage.resize(width, height);
         stage.render();
         animationId.current = requestAnimationFrame(draw);
       }
-      animationId.current = requestAnimationFrame(draw);
-      return () => {
-        if (animationId.current) cancelAnimationFrame(animationId.current)
-      }
+      const start = () => {
+        if (animationId.current === null) animationId.current = requestAnimationFrame(draw);
+      };
+      const stop = () => {
+        if (animationId.current) cancelAnimationFrame(animationId.current);
+        animationId.current = null;
+      };
+      start();
+      return () => stop();
     }
   }, []);
 

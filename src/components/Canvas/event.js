@@ -56,15 +56,23 @@ export class EventsManager {
 export class Stage {
   constructor(canvas) {
     this.canvas = canvas;
-    this.oCanvas = new OffscreenCanvas(canvas.width, canvas.height);
-    this.ctx = canvas.getContext('2d');
+    if (window.OffscreenCanvas) {
+      this.oCanvas = new window.OffscreenCanvas(this.canvas.width, this.canvas.height);
+    } else {
+      this.oCanvas = document.createElement('canvas');
+      this.oCanvas.width = this.canvas.width;
+      this.oCanvas.height = this.canvas.height;
+    }
+    this.ctx = this.canvas.getContext('2d');
     this.oCtx = this.oCanvas.getContext('2d');
     this.shapes = new Set();
     this.idsManager = new IdsManager();
     this.eventsManager = new EventsManager(this.oCtx);
-    canvas.addEventListener('click', this.onClick);
-    canvas.addEventListener('mousemove', this.onMouseMove);
-    canvas.addEventListener('mouseout', this.onMouseOut);
+    this.canvas.addEventListener('click', this.onClick);
+    this.canvas.addEventListener('mousedown', this.onMouseDown);
+    this.canvas.addEventListener('mouseup', this.onMouseUp);
+    this.canvas.addEventListener('mousemove', this.onMouseMove);
+    this.canvas.addEventListener('mouseout', this.onMouseOut);
   }
 
   add = shape => {
@@ -114,11 +122,26 @@ export class Stage {
     });
   }
 
+  onMouseDown = e => {
+    if (e.target.setCapture) e.target.setCapture();
+    const id = this.getEventId(e);
+    Array.from(this.eventsManager.list.keys()).forEach(item => {
+      if (item === `${id}.mouseDown`) this.eventsManager.list.get(item)(e);
+    });
+  }
+  
+  onMouseUp = e => {
+    const id = this.getEventId(e);
+    Array.from(this.eventsManager.list.keys()).forEach(item => {
+      if (item === `${id}.mouseUp`) this.eventsManager.list.get(item)(e);
+    });
+  }
+
   onMouseMove = e => {
     const id = this.getEventId(e);
     Array.from(this.eventsManager.list.keys()).forEach(item => {
       const inEventNames = ['mouseMove', 'mouseOver', 'mouseEnter'];
-      const outEventNames = ['mouseOut', 'mouseLeave'];
+      const outEventNames = ['mouseOut', 'mouseLeave', 'mouseUp'];
       const eventName = item.split('.').pop('.');
       if (item.startsWith(id)) {
         if (inEventNames.includes(eventName)) this.eventsManager.list.get(item)(e);
@@ -130,7 +153,7 @@ export class Stage {
 
   onMouseOut = e => {
     Array.from(this.eventsManager.list.keys()).forEach(item => {
-      const outEventNames = ['mouseOut', 'mouseLeave'];
+      const outEventNames = ['mouseOut', 'mouseLeave', 'mouseUp'];
       const eventName = item.split('.').pop('.');
       if (outEventNames.includes(eventName)) this.eventsManager.list.get(item)(e);
     });
@@ -152,6 +175,13 @@ class Shape {
       shadowBlur: 0,
       shadowOffsetX: 0,
       shadowOffsetY: 0,
+      ...options,
+    };
+  }
+
+  setOptions = options => {
+    this.options = {
+      ...this.options,
       ...options,
     };
   }
