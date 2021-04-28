@@ -5,10 +5,12 @@ import { Stage, Rect, Circle } from './event';
 const Canvas = props => {
   const ref = useRef(null);
   const animationId = useRef(null);
+  const stageRef = useRef(null);
 
   useEffect(() => {
     if (ref) {
       const stage = new Stage(ref.current);
+      stageRef.current = stage;
       const space = new Rect({ x: 0, y: 0 });
       stage.add(space);
       const sun = new Circle({ fillStyle: '#FF4500', radius: 30, shadowColor: 'yellow', shadowBlur: 20 });
@@ -74,9 +76,17 @@ const Canvas = props => {
     }
   }, []);
 
+  const clear = () => {
+    if (stageRef.current) stageRef.current.clear();
+  }
+
   return (
-    <div className={styles.container}>
-      <canvas ref={ref} style={{ width: '100%', height: '100%' }} /> 
+    <div className={styles.container} style={{ position: 'relative' }}>
+      <canvas ref={ref} style={{ width: '100%', height: '100%' }} />
+      <div style={{ position: 'absolute', bottom: 0 }}>
+        <button>绘制</button>
+        <button onClick={clear}>清空</button>
+      </div>
     </div>
   );
 }

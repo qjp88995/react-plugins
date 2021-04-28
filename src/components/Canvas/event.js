@@ -20,6 +20,10 @@ class IdsManager {
     if (id) this.poor.delete(id);
   }
 
+  clear = () => {
+    this.poor.clear();
+  }
+
   static idToRgba = id => {
     return id.split('-').map(item => parseInt(item));
   }
@@ -84,6 +88,13 @@ export class Stage {
   remove = shape => {
     this.shapes.delete(shape);
     this.idsManager.remove(shape.id);
+    this.eventsManager.removeAll(shape);
+  }
+
+  clear = shape => {
+    this.shapes.clear();
+    this.idsManager.clear();
+    this.eventsManager.clear();
   }
 
   resize = (width, height) => {
