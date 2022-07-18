@@ -1,27 +1,43 @@
 class IdsManager {
   constructor() {
-    this.poor = new Set();
+    this.r = this.g = this.b = 0;
+    this.destroyPoor = [];
   }
 
   generate = () => {
-    return new Array(3).fill(0).map(() => Math.round(Math.random() * 255)).concat(255).join('-');
+    if (this.destroyPoor.length > 0) {
+      return this.destroyPoor.pop();
+    } else {
+      const id = [this.r, this.g, this.b].concat(255).join('-');
+      this.b++;
+      if (this.b > 255) {
+        this.b = 0;
+        this.g++;
+      }
+      if (this.g > 255) {
+        this.g = 0;
+        this.r++;
+      }
+      if (this.r > 255) {
+        const message = 'id个数已超出最大限制';
+        console.error(message);
+        throw new Error(message);
+      }
+      return id;
+    }
   }
 
   create = () => {
-    let id = this.generate();
-    while (this.poor.has(id)) {
-      id = this.generate();
-    }
-    this.poor.add(id);
-    return id;
+    return this.generate();
   }
 
   remove = id => {
-    if (id) this.poor.delete(id);
+    if (id) this.destroyPoor.push(id);
   }
 
   clear = () => {
-    this.poor.clear();
+    this.destroyPoor = [];
+    this.r = this.g = this.b = 0;
   }
 
   static idToRgba = id => {
